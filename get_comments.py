@@ -20,7 +20,6 @@ load_dotenv()
 APP_ID = os.getenv('APP_ID')
 PAGE_ACCESS_TOKEN = os.getenv('PAGE_ACCESS_TOKEN')
 APP_SECRET = os.getenv('APP_SECRET')
-SIPHOX_PAGE_ID = os.getenv('SIPHOX_PAGE_ID')
 QUANTIFY_AD_ACCT_ID = os.getenv('QUANTIFY_AD_ACCT_ID')
 SLACK_TOKEN = os.getenv('SLACK_TOKEN')
 CID = os.getenv('CID')
@@ -31,11 +30,6 @@ PG_ID = os.getenv('PG_CID')
 
 # Initialize API with the user access token
 api = FacebookAdsApi.init(app_id=APP_ID, app_secret=APP_SECRET, access_token=PAGE_ACCESS_TOKEN)
-
-# Initialize the Page object with the page access token
-page = Page(SIPHOX_PAGE_ID, api=api)
-posts = page.get_posts(params={
-        'fields': ['id', 'message', 'permalink_url']})
 
 last_week = (datetime.now(timezone.utc) - timedelta(days=7)).strftime('%Y-%m-%d')
 today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
@@ -132,7 +126,7 @@ if formatted_blocks:
     formatted_blocks.pop()
 
 
-slack_client = SlackClient(token=SLACK_TOKEN, channel_id=PG_ID)
+slack_client = SlackClient(token=SLACK_TOKEN, channel_id=CID)
 
 # Send the comments as a Slack block message
 if formatted_blocks:

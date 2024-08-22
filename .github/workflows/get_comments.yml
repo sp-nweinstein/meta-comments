@@ -1,0 +1,37 @@
+name: Run Facebook Comments Script
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Runs daily at 9 AM UTC
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'  # Specify Python 3.12
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Facebook Comments Script
+      env:
+        APP_ID: ${{ secrets.APP_ID }}
+        PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+        APP_SECRET: ${{ secrets.APP_SECRET }}
+        SIPHOX_PAGE_ID: ${{ secrets.SIPHOX_PAGE_ID }}
+        QUANTIFY_AD_ACCT_ID: ${{ secrets.QUANTIFY_AD_ACCT_ID }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        CID: ${{ secrets.CID }}
+        PG_CID: ${{ secrets.PG_CID }}
+      run: |
+        python path/to/your/script.py
