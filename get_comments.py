@@ -126,7 +126,7 @@ if formatted_blocks:
     formatted_blocks.pop()
 
 
-slack_client = SlackClient(token=SLACK_TOKEN, channel_id=PG_ID)
+slack_client = SlackClient(token=SLACK_TOKEN, channel_id=CID)
 
 # Send the comments as a Slack block message
 if formatted_blocks:
