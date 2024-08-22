@@ -2,7 +2,7 @@ name: Run Facebook Comments Script
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Runs daily at 9 AM UTC
+    - cron: '0 9 * * *'  # Runs daily at 9 AM UTC (5am edt)
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
@@ -28,10 +28,9 @@ jobs:
         APP_ID: ${{ secrets.APP_ID }}
         PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
         APP_SECRET: ${{ secrets.APP_SECRET }}
-        SIPHOX_PAGE_ID: ${{ secrets.SIPHOX_PAGE_ID }}
         QUANTIFY_AD_ACCT_ID: ${{ secrets.QUANTIFY_AD_ACCT_ID }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
         CID: ${{ secrets.CID }}
         PG_CID: ${{ secrets.PG_CID }}
       run: |
-        python path/to/your/script.py
+        python get_comments.py
