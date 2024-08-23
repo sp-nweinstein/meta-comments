@@ -49,6 +49,8 @@ ads = ad_account.get_ads(params={
 
 all_comment_data = []
 yesterdays_comments = []
+unique_comments = set()
+
 
 for ad in ads:
     ad_id = ad['id']
@@ -97,7 +99,9 @@ for ad in ads:
             print(comment_info)
             # Check if the comment was created within yesterday's range
             if yesterday_start <= comment_time <= yesterday_end:
-                yesterdays_comments.append(comment_info)
+                if comment_info['message'] not in unique_comments:
+                    yesterdays_comments.append(comment_info)
+                    unique_comments.add(comment_info['message'])
 
 
 print(f"YESTERDAY'S COMMENTS: {yesterdays_comments}")
