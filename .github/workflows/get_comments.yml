@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run Facebook Comments Script
+    - name: Run Facebook Comments Script with Retry
       env:
         APP_ID: ${{ secrets.APP_ID }}
         PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
@@ -33,4 +33,7 @@ jobs:
         CID: ${{ secrets.CID }}
         PG_CID: ${{ secrets.PG_CID }}
       run: |
-        python get_comments.py
+        RETRIES=3
+        for i in $(seq 1 $RETRIES); do
+          python get_comments.py && break || sleep 10
+        done

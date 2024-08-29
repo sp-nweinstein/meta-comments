@@ -6,15 +6,11 @@ import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-load_dotenv()
-slack_token = os.getenv('SLACK_TOKEN')
-channel_id = os.getenv('CID')
-playground_cid = os.getenv('PG_CID')
-
 class SlackClient:
     def __init__(self, token, channel_id):
         self.client = WebClient(token=token)
         self.channel_id = channel_id
+        self.token = token
 
     def get_messages(self):
         # The API URL to fetch conversation history
@@ -22,13 +18,13 @@ class SlackClient:
 
         # Parameters for the request
         params = {
-            'channel': channel_id,
+            'channel': self.channel_id,
             'limit': 5  # Adjust the limit as needed to get more messages
         }
 
         # Headers for authorization
         headers = {
-            'Authorization': f'Bearer {slack_token}'
+            'Authorization': f'Bearer {self.token}'
         }
 
         # Make the request
